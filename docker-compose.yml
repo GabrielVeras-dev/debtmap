@@ -1,0 +1,51 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: debtmap-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: debtmap_db
+      POSTGRES_USER: debtmap_user
+      POSTGRES_PASSWORD: debtmap_pass
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U debtmap_user -d debtmap_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - debtmap-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: debtmap-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/debtmap_db
+      DB_USERNAME: debtmap_user
+      DB_PASSWORD: debtmap_pass
+      JWT_SECRET: ${JWT_SECRET:-troque-este-secret-em-producao}
+    ports:
+      - "8080:8080"
+    networks:
+      - debtmap-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  debtmap-network:
+    driver: bridge

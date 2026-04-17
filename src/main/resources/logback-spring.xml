@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
+
+    <!-- ── Dev: console colorido ─────────────────────────── -->
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>
+                    %cyan(%d{HH:mm:ss}) %yellow([%thread]) %blue([%X{traceId:-no-trace}]) %highlight(%-5level) %green(%logger{30}) - %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+
+        <logger name="com.debtmap" level="DEBUG"/>
+        <logger name="org.hibernate.SQL" level="DEBUG"/>
+    </springProfile>
+
+    <!-- ── Prod: JSON estruturado ────────────────────────── -->
+    <springProfile name="prod">
+        <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>{"timestamp":"%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}","level":"%-5level","app":"%property{APP_NAME}","traceId":"%X{traceId:-none}","userId":"%X{userId:-none}","thread":"%thread","logger":"%logger{40}","message":"%msg"}%n</pattern>
+            </encoder>
+        </appender>
+
+        <root level="WARN">
+            <appender-ref ref="JSON_CONSOLE"/>
+        </root>
+
+        <logger name="com.debtmap" level="INFO"/>
+    </springProfile>
+
+</configuration>
