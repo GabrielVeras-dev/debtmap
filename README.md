@@ -20,7 +20,7 @@ O projeto segue uma arquitetura em camadas inspirada no Clean Architecture:
 ## ✅ Funcionalidades
 
 - [x] Setup do projeto — Módulo 1
-- [ ] Domínio — entidades e repositórios
+- [x] Domínio — entidades e repositórios
 - [ ] Autenticação — registro, login e JWT (access + refresh token)
 - [ ] Transações — CRUD de entradas e saídas
 - [ ] Categorias — gerenciamento de categorias de gastos
