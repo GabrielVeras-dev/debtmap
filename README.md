@@ -24,7 +24,7 @@ O projeto segue uma arquitetura em camadas inspirada no Clean Architecture:
 - [x] Autenticação — registro, login e JWT (access + refresh token)g
 - [x] Transações — CRUD de entradas e saídas
 - [x] Categorias — gerenciamento de categorias de gastos
-- [ ] Dívidas — controle de dívidas com parcelas e cálculo de juros
+- [x] Dívidas — controle de dívidas com parcelas e cálculo de juros
 - [ ] Dashboard — resumo financeiro do usuário
 
 ## 🛠️ Tecnologias
