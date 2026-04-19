@@ -38,7 +38,7 @@ public class User implements UserDetails {
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 10, columnDefinition = "user_role")
     private UserRole role;
 
     @Column(nullable = false)
